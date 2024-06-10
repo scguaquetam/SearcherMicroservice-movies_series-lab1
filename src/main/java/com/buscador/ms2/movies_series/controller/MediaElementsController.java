@@ -1,6 +1,7 @@
 package com.buscador.ms2.movies_series.controller;
 
 import com.buscador.ms2.movies_series.model.pojo.MediaElement;
+import com.buscador.ms2.movies_series.model.pojo.MediaElementDto;
 import com.buscador.ms2.movies_series.model.request.CreateMediaElementRequest;
 import com.buscador.ms2.movies_series.service.MediaElementService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,6 +77,26 @@ public class MediaElementsController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/media-elements/{mediaElementId}")
+    @Operation(
+            operationId = "Delete media element",
+            description = "Write operation",
+            summary = "Deletes a media element by its id.")
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)))
+    @ApiResponse(
+            responseCode = "404",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Media element not found")
+    public ResponseEntity<Void> deleteMediaElement(@PathVariable String mediaElementId) {
+        Boolean removed = service.removeMediaElement(mediaElementId);
+        if (Boolean.TRUE.equals(removed)) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping("/media-elements")
     @Operation(
             operationId = "Create media element",
@@ -96,6 +117,54 @@ public class MediaElementsController {
         MediaElement newMediaElement = service.createMediaElement(mediaElement);
         if (newMediaElement != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body(newMediaElement);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @PatchMapping("/media-elements/{mediaElementId}")
+    @Operation(
+            operationId = "Update  partially media element",
+            description = "Write operation",
+            summary = "Updates a media element by its id.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Media element to be updated",
+                    required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateMediaElementRequest.class))))
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MediaElement.class)))
+    @ApiResponse(
+            responseCode = "400",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Bad request")
+    public ResponseEntity<MediaElement> patchMediaElement(@PathVariable String mediaElementId, @RequestBody String patchBody) {
+        MediaElement updatedMediaElement = service.updateMediaElement(mediaElementId, patchBody);
+        if (updatedMediaElement != null) {
+            return ResponseEntity.ok(updatedMediaElement);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @PutMapping("/media-elements/{mediaElementId}")
+    @Operation(
+            operationId = "Update completely media element",
+            description = "Write operation",
+            summary = "Modifies completely the media element .",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Media element to be updated",
+                    required = true,
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = CreateMediaElementRequest.class))))
+    @ApiResponse(
+            responseCode = "200",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MediaElement.class)))
+    @ApiResponse(
+            responseCode = "400",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = Void.class)),
+            description = "Bad request")
+    public ResponseEntity<MediaElement> updateMediaElement(@PathVariable String mediaElementId, @RequestBody MediaElementDto body) {
+        MediaElement updatedMediaElement = service.updateMediaElement(mediaElementId, body);
+        if (updatedMediaElement != null) {
+            return ResponseEntity.ok(updatedMediaElement);
         } else {
             return ResponseEntity.badRequest().build();
         }
