@@ -6,8 +6,8 @@ import com.buscador.ms2.movies_series.model.pojo.MediaElement;
 import com.buscador.ms2.movies_series.model.pojo.MediaElementDto;
 import com.buscador.ms2.movies_series.model.request.CreateMediaElementRequest;
 
-public interface MediaElementsService {
-    List<MediaElement> getMediaElements(String type, String title, String poster, String description, String director, Integer year, String duration, String rating, String trailerID);
+public interface MediaElementService {
+    List<MediaElement> getMediaElements(String type, String title, String director, Integer releaseYear);
     MediaElement getMediaElement(String mediaElementId);
     Boolean removeMediaElement(String mediaElementId);
     MediaElement createMediaElement(CreateMediaElementRequest mediaElement);

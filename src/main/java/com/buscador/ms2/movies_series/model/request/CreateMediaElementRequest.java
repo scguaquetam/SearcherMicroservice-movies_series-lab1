@@ -15,7 +15,7 @@ public class CreateMediaElementRequest {
         private String poster;
         private String description;
         private String director;
-        private Integer year;
+        private Integer releaseYear;
         private String duration;
         private String rating;
         private String trailerID;

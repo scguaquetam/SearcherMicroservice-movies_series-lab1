@@ -31,8 +31,8 @@ public class MediaElement {
     @Column(name = "director")
     private String director;
 
-    @Column(name = "year")
-    private Integer year;
+    @Column(name = "releaseYear")
+    private Integer releaseYear;
 
     @Column(name = "duration")
     private String duration;
@@ -49,7 +49,7 @@ public class MediaElement {
         this.poster = mediaElementDto.getPoster();
         this.description = mediaElementDto.getDescription();
         this.director = mediaElementDto.getDirector();
-        this.year = mediaElementDto.getYear();
+        this.releaseYear = mediaElementDto.getReleaseYear();
         this.duration = mediaElementDto.getDuration();
         this.rating = mediaElementDto.getRating();
         this.trailerID = mediaElementDto.getTrailerID();
