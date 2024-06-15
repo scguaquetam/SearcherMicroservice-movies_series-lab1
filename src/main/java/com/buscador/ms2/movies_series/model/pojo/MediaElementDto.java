@@ -1,4 +1,4 @@
-package com.operador.ms1.movies_series.models;
+package com.buscador.ms2.movies_series.model.pojo;
 
 import lombok.*;
 
@@ -8,9 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class MoviesSeries {
 
-    private Long id;
+public class MediaElementDto {
     private String type;
     private String title;
     private String poster;
